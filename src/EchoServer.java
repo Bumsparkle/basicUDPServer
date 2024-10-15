@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.util.Objects;
 
 public class EchoServer {
     public static void main(String[] args) throws IOException {
@@ -24,7 +25,7 @@ public class EchoServer {
             System.out.println(e.getMessage());
         }
 
-        while(true){
+        while (true){
             System.out.println("Waiting ....");
             //clear the buffer
             buffer = new byte[256];
@@ -36,12 +37,24 @@ public class EchoServer {
             //inside the byte array of the DatagramPacket passed to it.
             serverSocket.receive(DpRecieve);
 
+            //Get client IP and port of client
+            InetAddress clientAddress = DpRecieve.getAddress();
+            int clientPort = DpRecieve.getPort();
+
             // convert the byte array into a string message
             String received = new String(DpRecieve.getData()).trim();
             //or
             //String received = new Sting(buffer, 0, DpReceive.getLength());
 
-            System.out.println("server received " + received.length() + " bytes" + "\n" + received);
+            System.out.println("server received " + received.length() + " bytes: " + received);
+            System.out.println("From client IP: " + clientAddress + " Port: " + clientPort);
+
+            //creates an exit
+            if (Objects.equals(received, "exit")) {
+                System.out.println("exiting ...");
+                break;
+            }
+
             System.out.println("---------------------");
         }
     }

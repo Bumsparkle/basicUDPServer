@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.Objects;
 
 public class EchoClient {
     public static void main(String[] args) throws IOException {
@@ -44,6 +45,12 @@ public class EchoClient {
             DatagramPacket DpSend = new DatagramPacket(buffer, buffer.length, ip, portNumber);
 
             clientSocket.send(DpSend);
+
+            //creates an exit
+            if (Objects.equals(userInput, "exit")) {
+                System.out.println("exiting ...");
+                break;
+            }
         }
 
     }
