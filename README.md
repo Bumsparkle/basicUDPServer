@@ -11,6 +11,7 @@
 ### Extension 2
 
 - Both the Client and the Server send and receive packets
+- Completed
 
 ### Extension 3
 

@@ -32,6 +32,7 @@ public class EchoClient {
 
         String userInput = null;
         byte[] buffer = null;
+        byte[] replyData = new byte[1024];
 
         while (true) {
             System.out.print("please enter the message: ");
@@ -45,6 +46,19 @@ public class EchoClient {
             DatagramPacket DpSend = new DatagramPacket(buffer, buffer.length, ip, portNumber);
 
             clientSocket.send(DpSend);
+
+            System.out.println("waiting ...");
+
+            //receiving the ok
+            DatagramPacket replyPacket = new DatagramPacket(replyData, replyData.length);
+            clientSocket.receive(replyPacket);
+
+            String response = new String(replyPacket.getData()).trim();
+            if (response.equalsIgnoreCase("ok")) {
+                System.out.println("client received: " + response);
+                System.out.println("-----------------------");
+            }
+
 
             //creates an exit
             if (Objects.equals(userInput, "exit")) {

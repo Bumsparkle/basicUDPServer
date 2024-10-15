@@ -49,6 +49,14 @@ public class EchoServer {
             System.out.println("server received " + received.length() + " bytes: " + received);
             System.out.println("From client IP: " + clientAddress + " Port: " + clientPort);
 
+            //Create "ok" package
+            String reply = "ok";
+            byte[] replyByte = reply.getBytes();
+            DatagramPacket replyPacket =
+                    new DatagramPacket(replyByte, replyByte.length, clientAddress, clientPort);
+            serverSocket.send(replyPacket);
+            System.out.println("Server sent " + reply);
+
             //creates an exit
             if (Objects.equals(received, "exit")) {
                 System.out.println("exiting ...");
